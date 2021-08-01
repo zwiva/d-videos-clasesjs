@@ -1,60 +1,65 @@
 "use strict";
-
 class Multimedia {
+  // #_url;
   constructor(url) {
-    this._url = url;
+    // permite que al instanciar la clase se puedan pasar parametros para definir la caracteristicas de la instancia 
+    this._url = url; //se activa la propiedad de la clase -> instanciaDeMultimedia._url
   }
 
+  //un get y un set por propiedad
   get url() {
-    return this._url
+    return this._url;
   }
 
   setInicio() {
     console.log(',,,,')
-
   }
 }
 
 class Reproductor extends Multimedia {
   // al reproductor se le pasa la url embebida y el id del html
   constructor(url, id) {
-    super(url);
-    this.id = id;
+    super(url); //llama al constructor desde el que extiende
+    this._id = id;
   }
+
+  // get url() {
+  //   return this._url;
+  // }
+
+  // set url(nuevaurl) {
+  //   this._url = nuevaurl;
+  // }
 
   setInicio(time) {
-    // agregar set inicio para tiempo de youtube
-    super._url += `?start=${time}` 
-    // a la url le agrega?ytiempo
-    // this._url += `?start=${time}`
-    // la url original
+    // agregar set inicio para tiempo de youtube: a la url le agrega? y tiempo
+    this._url += `?start=${time}`;
   }
 
-  playMultimedia() {
-    //obtener url y id 
+  playMultimedia() { 
+    const newiframe = document.querySelector(this._id);
+    // console.log('iframe1', newiframe)
+    newiframe.setAttribute("src", this._url);
+    // console.log('iframe2', newiframe)
 
-    const iframe = document.querySelector(this.id);
-    iframe.setAttribute("src", this.url)
   }
 
 }
 
+const reproductorMusica = new Reproductor("https://www.youtube.com/embed/ReJH1psuB1Q", "#musica");
+
+const reproductorPelicula = new Reproductor("https://www.youtube.com/embed/bb2LX01k-fQ", "#peliculas");
+
+const reproductorSeries = new Reproductor("https://www.youtube.com/embed/rt_IFI_Apq8", "#series");
+
 ////////////////////
 
 //
-const reproductorMusica = new Reproductor("https://www.youtube.com/embed/dQw4w9WgXcQ", "#musica");
+reproductorMusica.setInicio(5);
+reproductorPelicula.setInicio(10);
+reproductorSeries.setInicio(15);
 
-const reproductorPelicula = new Reproductor("https://www.youtube.com/embed/jeI992mvlEY", "#peliculas");
-
-const reproductorSeries = new Reproductor("https://www.youtube.com/embed/jeI992mvlEY", "#series");
-
-//
-reproductorMusica.setInicio(1);
-reproductorPelicula.setInicio(2);
-reproductorSeries.setInicio(2);
-
-//
-const collapseOneElement = document.querySelector('#headingOne');
+const collapseOneElement = document.querySelector("#headingOne");
 collapseOneElement.addEventListener("click", function () {
   reproductorMusica.playMultimedia();
 })
@@ -68,15 +73,5 @@ const collapseThreeElement = document.querySelector('#headingThree');
 collapseThreeElement.addEventListener("click", function () {
   reproductorSeries.playMultimedia();
 })
-
-
-// const iframemusica = document.querySelector('#musica')
-// const iframepelicula = document.querySelector('#pelicula')
-// const iframeserie = document.querySelector('#serie')
-
-
-//que se carguen:
-// reproductorPelicula.playMultimedia();
-// reproductorSeries.playMultimedia();
 
 
